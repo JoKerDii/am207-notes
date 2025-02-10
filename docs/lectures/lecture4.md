@@ -54,23 +54,19 @@ Let $Y\sim \mathcal{N}(\mu,\sigma^2)$, with $\sigma^2$ known. We place a normal 
 Question: Is the choice of prior apropriate?
 
 **Inference:** The posterior $p(\mu|Y)$ is then:
+
+
 $$
 \begin{aligned}
-
 p(\mu | Y) = \frac{p(Y| \mu)p(\mu)}{p(Y)} = \frac{\overbrace{\frac{1}{\sqrt{2\pi \sigma^2}} \mathrm{exp} \left\{-\frac{(Y - \mu)^2}{2\sigma^2}\right\}}^{\text{likelihood}} \overbrace{\frac{1}{\sqrt{2\pi s^2}} \mathrm{exp} \left\{-\frac{(m - \mu)^2}{2s^2}\right\}}^{\text{prior}}}{p(Y)}
-
 \end{aligned}
 $$
 We can simplify the posterior as:
 $$
 \begin{aligned}
-
 p(\mu | Y) &= const *\frac{\mathrm{exp} \left\{ -\frac{s^2(Y - \mu)^2 + \sigma^2(m - \mu)^2}{2s^2\sigma^2}\right\}}{p(Y)} \\
-
 &= const *\mathrm{exp} \left\{ \frac{s^2Y^2 + \sigma^2m^2}{\sigma^2 s^2}\right\}\mathrm{exp} \left\{ -\frac{(s^2 + \sigma^2)\mu^2 - 2(s^2Y + \sigma^2m)\mu}{2s^2\sigma^2}\right\}\\
-
 &= const* \mathrm{exp} \left\{ -\frac{\left(\mu - \frac{s^2Y + \sigma^2m}{s^2 + \sigma^2} \right)^2}{2s^2\sigma^2}\right\}\quad \text{(Completing the square)}
-
 \end{aligned}
 $$
 Thus, we see that the posterior is a normal distribution, $\mathcal{N}\left(\frac{s^2Y + \sigma^2m}{s^2 + \sigma^2}, s^2\sigma^2\right)$.
@@ -86,17 +82,13 @@ Question: is the choice of prior appropriate?
 **Inference**: The posterior $p(\sigma^2|Y)$ is then:
 $$
 \begin{aligned}
-
 p(\sigma^2 | Y) = \frac{p(Y| \sigma^2)p(\sigma^2)}{p(Y)} = \frac{\overbrace{\frac{1}{\sqrt{2\pi \sigma^2}} \mathrm{exp} \left\{-\frac{(Y - \mu)^2}{2\sigma^2}\right\}}^{\text{likelihood}} \overbrace{\frac{\beta^\alpha}{\Gamma(\alpha)} \left( \sigma^2\right)^{-\alpha -1}\mathrm{exp} \left\{-\frac{\beta}{\sigma^2}\right\}}^{\text{prior}}}{p(Y)}
-
 \end{aligned}
 $$
 We can simplify the posterior as:
 $$
 \begin{aligned}
-
 p(\sigma^2 | Y) &= const * \left( \sigma^2\right)^{-(\alpha + 0.5) -1}\mathrm{exp} \left\{-\frac{\frac{(Y-\mu)^2}{2} + \beta}{\sigma^2}\right\}
-
 \end{aligned}
 $$
 Thus, we see that the posterior is an inverse gamma distribution, $IG\left(\alpha + 0.5, \frac{(Y-\mu)^2}{2} + \beta\right)$.
@@ -106,13 +98,15 @@ Thus, we see that the posterior is an inverse gamma distribution, $IG\left(\alph
 Let $Y \sim \mathcal{N}(\mu, \sigma^2)$, with both parameters unknown. We place a normal prior on $\mu$, $\mu \sim \mathcal{N}(m, s^2)$, and an inverse-gamma prior on $\sigma^2, \sigma^2 \sim IG(\alpha, \beta)$.
 
 The posterior $p(\sigma^2|Y)$ is then:
+
+
 $$
 \begin{aligned}
-
-p(\mu, \sigma^2 | Y)  = \frac{\overbrace{\frac{1}{\sqrt{2\pi \sigma^2}} \mathrm{exp} \left\{-\frac{(Y - \mu)^2}{2\sigma^2}\right\}}^{\text{likelihood}} \overbrace{\frac{1}{\sqrt{2\pi s^2}} \mathrm{exp} \left\{-\frac{(m - \mu)^2}{2s^2}\right\}}^{\text{prior on $\mu$}}\overbrace{\frac{\beta^\alpha}{\Gamma(\alpha)} \left( \sigma^2\right)^{-\alpha -1}\mathrm{exp} \left\{-\frac{\beta}{\sigma^2}\right\}}^{\text{prior on $\sigma^2$}}}{p(Y)}
-
+p(\mu, \sigma^2 | Y)  = \frac{\overbrace{\frac{1}{\sqrt{2\pi \sigma^2}} \mathrm{exp} \left\{-\frac{(Y - \mu)^2}{2\sigma^2}\right\}}^{\text{likelihood}} \overbrace{\frac{1}{\sqrt{2\pi s^2}} \mathrm{exp} \left\{-\frac{(m - \mu)^2}{2s^2}\right\}}^{\text{prior on } \mu}\overbrace{\frac{\beta^\alpha}{\Gamma(\alpha)} \left( \sigma^2\right)^{-\alpha -1}\mathrm{exp} \left\{-\frac{\beta}{\sigma^2}\right\}}^{\text{prior on }  \sigma^2}}{p(Y)}
 \end{aligned}
 $$
+
+
 **Question**: Can the posterior be simplified so that we recognize the form of the distribution? 
 
 No. These two priors we've chosen together are not conjugate to the normal likelihood. This means even if you always wanted to choose a mathematically convenient prior rather than one that's meaningful in the context of the real life application. It isn't always so easy to do so. 
@@ -156,7 +150,5 @@ If you absolutely wanted to derive a point estimate for the parameters $\theta$ 
    $$
    \theta_{MAP} = \arg \max_{\theta} p(\theta | Y)
    $$
-
-3. 
 
 **Question**: is it better to summarize the entire posterior using a point estimate? i.e. why should we keep the posterior distribution around?
