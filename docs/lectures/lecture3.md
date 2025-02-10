@@ -1,6 +1,6 @@
 ## Bayesian Modeling
 
-Content:
+Outline:
 
 1. Review of Method of Maximum Likelihood
 2. Models for Real Data
@@ -168,6 +168,69 @@ We can rewrite the posterior as
 $$
 p(\theta|Y)= const \times \theta^{(Y+\alpha)-1} (1-\theta)^{(N-Y+\beta)-1}
 $$
-where $const = {{N\choose Y}\over \Beta(\alpha,\beta) p(Y)}$ must be the normalizing constant for $p(\theta|Y)$. This means this constant has to be the normalizing constant that turns expression of $\theta^{(Y+\alpha)-1} (1-\theta)^{(N-Y+\beta)-1}$ into a valid PDF.
+where $const = {{N\choose Y}\over \Beta(\alpha,\beta) p(Y)}$ must be the normalizing constant for $p(\theta|Y)$. This means this constant has to be the normalizing constant that turns expression of $\theta^{(Y+\alpha)-1} (1-\theta)^{(N-Y+\beta)-1}$ into a valid PDF. [Proof in the exercise]
 
-Takeaway: when we use a binomial likelihood and a beta prior, our posterior is a beta distribution $Beta(Y+\alpha, N-Y+\beta)$, with parameters including both the observed data and our prior beliefs. 
+**Takeaway**: when we use a binomial likelihood and a beta prior, our posterior is a beta distribution $Beta(Y+\alpha, N-Y+\beta)$, with parameters including both the observed data and our prior beliefs. 
+
+#### Interpreting the Posterior: Bayesian Update
+
+Rather than a point estimate for $\theta$, we now have a posterior distribution, $p(\theta|Y)$, over $\theta$. What does the posterior tell us about $\theta$?
+
+Since the prior distribution $p(\theta)$ encoded our beliefs about $\theta$ along with our uncertainty, it is natural to interpret the posterior as yet another **belief** about $\theta$.
+
+Since the posterior includes the likelihood, this belief has been **updated by the data**. This means that the posterior represents a process of having a prior belief $p(\theta)$, observing some data in the form of the likelihood, and then changing your beliefs in order to accommodate the observation.
+
+#### Make Predictions
+
+If the posteriors we infer represent beliefs, how do we evaluate these beliefs?
+
+1. in the case that the true parameter $\theta^{true}$, we can check to see if the posterior assigns high likelihood to $\theta^{true}$, i.e. is the ground truth $\theta^{true}$ considered to be very good under the posterior? We can also check the uncertainty the posterior has about $\theta^{true}$, i.e. is our posterior very certain that $\theta^{true}$ is a highly likely model or very uncertain?
+
+2. (In real world we never know the ground true parameter that's generating the data, the only ground truth we have are the actual data itself, i.e. the $y$ values) When we do not know $\theta^{true}$, we can simulate data $Y^{\theta}$ using samples of $\theta$ from the posterior. We compare the distribution of simulated data, or **posterior predictive**, to the observed data.
+
+   If our posterior predictive aligns very well with the observed data, then that means that our bayesian model has successfully explained the observed data. If they do not align, then we know we have made an error in our modeling process.
+
+### 4. The Bayesian Modeling Process
+
+In order to make statements about $Y$, the outcome, and $\theta$, parameters of the distribution generating the data, we form the joint distribution over variables and use the various marginals / consditional distributions to reason about $Y$ and $\theta$.
+
+1. we form the **joint distribution** over both variables $p(Y,\theta) = p(Y|\theta)p(\theta)$.
+
+2. we can condition on the observed outcome to make inference about $\theta$.
+   $$
+   p(\theta|Y) = {p(Y,\theta)\over p(Y)}
+   $$
+   where $p(\theta|Y)$ is called the **posterior distribution** and $p(Y)$ is called the **evidence**.
+
+3. before any data is observed, we can simulate data by using our prior
+   $$
+   p(Y^*) = \int_{\Theta}p(Y^*, \theta)d\theta = \int_\Theta p(Y^*|\theta) p(\theta)d \theta
+   $$
+   where $Y^*$ represents new data and $p(Y^*)$ is called the **prior predictive**.
+
+4. after observing data, we can simulate new data similar to the observed data by using our posterior
+   $$
+   p(Y^*|Y) = \int_{\Theta}p(Y^*,\theta|Y) d\theta = \int_{\Theta} p(Y^*|\theta) p(\theta|Y) d\theta
+   $$
+   where $Y^*$ represents new data and $p(Y^*|Y)$ is called the **posterior predictive**.
+
+#### Evaluating Bayesian Models
+
+As we have seen in the Beta-Binomial model, we can simulate the posterior (and prior) predictive rather than compute them analytically. That is, you don't need to know the pdf of $p(Y^*|Y)$. You compare the posterior predictive to actual data you observed, and when the posterior predictive matches the observed data, this is a sanity check that your bayesian model is capturing something.
+
+The posterior predictive can be represented by **samples** of predictions:
+
+1. we sample values of $\theta_n$ from the posterior, $p(\theta|Y)$.
+2. we sample an outcome $Y_n$ from $p(Y|\theta_n)$ for each posterior sample $\theta_n$.
+
+The set $Y_n$ we obtain empirically represents the posterior predictive distribution $p(Y^*|Y)$.
+
+What does it mean by comparing posterior predictive against my observed data? A naive visual comparison? How do you rigorously and carefully compare the fit of two different models to the same data set? How do you perform this posterior predictive check if you can't visualize the data at all. There are a few sophisticated tools for evaluating bayesian models.
+
+#### Where do Priors Come From?
+
+All the priors chosen combined with the likelihood to form a distribution we recognize. Specifically, the posterior distributionis of the same type as the prior. 
+
+These priors are called **conjugate priors** for the corresponding lieklihoods. This is purely mathematical property.
+
+**Question**: is it right to choose priors that are mathematically convenient? What is a good way to choose a prior? what is we choose wrong?
