@@ -8,3 +8,5 @@
   - [Lecture 03](lectures/lecture3.md)
   
   - [Lecture 04](lectures/lecture4.md)
+  
+  - [Lecture 05](lectures/lecture5.md)
