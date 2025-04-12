@@ -10,3 +10,7 @@
   - [Lecture 04](lectures/lecture4.md)
   
   - [Lecture 05](lectures/lecture5.md)
+  
+  - [Lecture 06](lectures/lecture6.md)
+  
+  - [Lecture 07](lectures/lecture7.md)
