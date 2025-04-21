@@ -14,3 +14,5 @@
   - [Lecture 06](lectures/lecture6.md)
   
   - [Lecture 07](lectures/lecture7.md)
+  
+  - [Lecture 12](lectures/lecture12.md)
